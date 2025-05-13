@@ -22,11 +22,11 @@ fun BottomBar(navController: NavController) {
         NavigationBarItem(
             icon = { Icon(Icons.Default.Home, contentDescription = "Home") },
             label = { Text("Inicio") },
-            selected = currentRoute == "lista",
+            selected = currentRoute == NavigationElement.List.route(),
             onClick = {
-                if (currentRoute != "lista") {
-                    navController.navigate("lista") {
-                        popUpTo("lista") { inclusive = true }
+                if (currentRoute != NavigationElement.List.route()) {
+                    navController.navigate(NavigationElement.List.route()) {
+                        popUpTo(NavigationElement.List.route()) { inclusive = true }
                     }
                 }
             }
@@ -34,11 +34,11 @@ fun BottomBar(navController: NavController) {
         NavigationBarItem(
             icon = { Icon(Icons.Default.List, contentDescription = "Categories") },
             label = { Text("Categorías") },
-            selected = currentRoute == "categories",
+            selected = currentRoute == NavigationElement.Categories.route(),
             onClick = {
-                if (currentRoute != "categories") {
-                    navController.navigate("categories") {
-                        popUpTo("lista")
+                if (currentRoute != NavigationElement.Categories.route()) {
+                    navController.navigate(NavigationElement.Categories.route()) {
+                        popUpTo(NavigationElement.List.route())
                     }
                 }
             }
@@ -46,11 +46,11 @@ fun BottomBar(navController: NavController) {
         NavigationBarItem(
             icon = { Icon(Icons.Default.Search, contentDescription = "Search") },
             label = { Text("Buscar") },
-            selected = currentRoute == "search",
+            selected = currentRoute == NavigationElement.Search.route(),
             onClick = {
-                if (currentRoute != "search") {
-                    navController.navigate("search") {
-                        popUpTo("lista")
+                if (currentRoute != NavigationElement.Search.route()) {
+                    navController.navigate(NavigationElement.Search.route()) {
+                        popUpTo(NavigationElement.List.route())
                     }
                 }
             }
