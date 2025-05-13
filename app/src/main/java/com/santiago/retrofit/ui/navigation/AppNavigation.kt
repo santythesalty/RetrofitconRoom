@@ -20,13 +20,13 @@ fun AppNavigation(navController: NavHostController = rememberNavController()) {
     ) { paddingValues ->
         NavHost(
             navController = navController,
-            startDestination = "lista",
+            startDestination = NavigationElement.List.route(),
             modifier = Modifier.padding(paddingValues)
         ) {
-            composable("lista") {
+            composable(NavigationElement.List.route()) {
                 ListaScreen(
                     onProductClick = { productId ->
-                        navController.navigate("detail/$productId")
+                        navController.navigate(NavigationElement.Detail(productId).route())
                     }
                 )
             }
@@ -39,36 +39,36 @@ fun AppNavigation(navController: NavHostController = rememberNavController()) {
                             if (navController.previousBackStackEntry != null) {
                                 navController.popBackStack()
                             } else {
-                                navController.navigate("lista") {
-                                    popUpTo("lista") { inclusive = true }
+                                navController.navigate(NavigationElement.List.route()) {
+                                    popUpTo(NavigationElement.List.route()) { inclusive = true }
                                 }
                             }
                         }
                     )
                 }
             }
-            composable("categories") {
+            composable(NavigationElement.Categories.route()) {
                 CategoriesScreen(
                     onCategoryClick = { category ->
-                        navController.navigate("category/$category")
+                        navController.navigate(NavigationElement.Category(category).route())
                     }
                 )
             }
-            composable("category/{category}") { backStackEntry ->
-                val category = backStackEntry.arguments?.getString("category")
+            composable("category/{name}") { backStackEntry ->
+                val category = backStackEntry.arguments?.getString("name")
                 if (category != null) {
                     ListaScreen(
                         category = category,
                         onProductClick = { productId ->
-                            navController.navigate("detail/$productId")
+                            navController.navigate(NavigationElement.Detail(productId).route())
                         }
                     )
                 }
             }
-            composable("search") {
+            composable(NavigationElement.Search.route()) {
                 SearchScreen(
                     onProductClick = { productId ->
-                        navController.navigate("detail/$productId")
+                        navController.navigate(NavigationElement.Detail(productId).route())
                     }
                 )
             }
