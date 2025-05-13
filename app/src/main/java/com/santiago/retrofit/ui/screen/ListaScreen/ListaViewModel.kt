@@ -37,11 +37,10 @@ class ListaViewModel(application: Application, private val category: String? = n
                     Log.d("ListaViewModel", "Usando datos locales de Room")
                 } else {
                     Log.d("ListaViewModel", "No hay datos locales, obteniendo de la API")
+                    // Solo refrescamos si no hay datos locales por que la conexion es lenta
+                    repository.refreshProducts()
                 }
 
-                // Siempre refrescamos los datos de la API
-                repository.refreshProducts()
-                
                 // Observamos los cambios en la base de datos local
                 val flow = if (category != null) {
                     repository.getProductsByCategory(category)

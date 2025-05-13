@@ -91,9 +91,16 @@ class ProductRepository(private val context: Context) {
                 val predefinedEntities = predefinedProducts.map { ProductEntity.fromProduct(it) }
                 val allEntities = entities + predefinedEntities
                 
-                productDao.deleteAllProducts()
-                productDao.insertProducts(allEntities)
-                Log.d("ProductRepository", "Datos guardados en Room Database (${allEntities.size} productos)")
+                // Actualizar la base de datos local, insertando o actualizando según sea necesario
+                allEntities.forEach { entity ->
+                    val existingProduct = productDao.getProductById(entity.id)
+                    if (existingProduct != null) {
+                        productDao.updateProduct(entity)
+                    } else {
+                        productDao.insertProduct(entity)
+                    }
+                }
+                Log.d("ProductRepository", "Datos actualizados en Room Database (${allEntities.size} productos)")
             } catch (e: Exception) {
                 Log.e("ProductRepository", "Error al obtener datos: ${e.message}")
                 throw e
