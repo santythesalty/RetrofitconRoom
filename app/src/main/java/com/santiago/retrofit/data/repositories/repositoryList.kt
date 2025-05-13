@@ -84,7 +84,7 @@ class ProductRepository(private val context: Context) {
         withContext(Dispatchers.IO) {
             try {
                 Log.d("ProductRepository", "Obteniendo datos desde Retrofit")
-                val products = RemoteConectection.service.getProducts()
+                val products = RemoteConnection.service.getProducts()
                 val entities = products.map { ProductEntity.fromProduct(it) }
                 
                 // Agregar los productos predefinidos
